@@ -1,0 +1,15 @@
+services:
+
+  pg:
+    image: postgres
+    environment:
+      POSTGRES_DB: fastapi_users
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data/
+
+volumes:
+  pg_data:
