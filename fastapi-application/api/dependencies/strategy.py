@@ -13,6 +13,6 @@ if TYPE_CHECKING:
 
 
 def get_database_strategy(
-    access_token_db: Annotated["AccessTokenDatabase[AccessToken]", Depends(get_access_tokens_db)],
+    access_tokens_db: Annotated["AccessTokenDatabase[AccessToken]", Depends(get_access_tokens_db)],
 ):
-    return DatabaseStrategy(database=access_token_db, lifetime_seconds=settings.access_token.lifetime_seconds)
+    return DatabaseStrategy(database=access_tokens_db, lifetime_seconds=settings.access_token.lifetime_seconds)
