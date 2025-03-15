@@ -10,7 +10,7 @@ auth_router = APIRouter(prefix=settings.api.v1.auth, tags=["Auth"])
 # /login
 # /logout
 auth_router.include_router(
-    router=fastapi_users.get_auth_router(authentication_backend),
+    router=fastapi_users.get_auth_router(authentication_backend, requires_verification=True),
 )
 
 # /register
