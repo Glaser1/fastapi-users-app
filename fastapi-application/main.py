@@ -5,7 +5,7 @@ from create_fastapi_app import create_app
 from api import router as api_router
 from core.config import settings
 
-logging.basicConfig(format=settings.logging.log_format)
+logging.basicConfig(level=settings.logging.log_level_value, format=settings.logging.log_format)
 main_app = create_app(True)
 main_app.include_router(api_router)
 
