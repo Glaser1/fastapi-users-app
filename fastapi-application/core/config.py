@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 from typing import Literal
 
@@ -17,6 +18,10 @@ class LoggingConfig(BaseModel):
         "critical",
     ] = "info"
     log_format: str = LOG_DEFAULT_FORMAT
+
+    @property
+    def log_level_value(self) -> int:
+        return logging.getLevelNamesMapping()[self.log_level.upper()]
 
 
 class RunConfig(BaseModel):
