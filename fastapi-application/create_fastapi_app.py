@@ -8,7 +8,7 @@ from fastapi.openapi.docs import (
 )
 from fastapi.responses import ORJSONResponse
 
-
+from api.webhooks import webhooks_router
 from core.db_helper import db_helper
 
 
@@ -50,6 +50,7 @@ def create_app(create_custom_static_urls: bool = False) -> FastAPI:
         default_response_class=ORJSONResponse,
         docs_url=None if create_custom_static_urls else "/docs",
         redoc_url=None if create_custom_static_urls else "/redoc",
+        webhooks=webhooks_router
     )
     if create_custom_static_urls:
         register_static_docs_routes(app)
