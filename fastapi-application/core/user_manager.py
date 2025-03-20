@@ -1,12 +1,14 @@
 import logging
-from typing import Annotated, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Annotated, Optional
+
 
 from fastapi import Depends
 from fastapi_users import BaseUserManager, IntegerIDMixin
 
-from core.models import User
-from api.dependencies.database_dependencies import get_users_db
+from api.dependencies.authentication.database_dependencies import get_users_db
 from core.config import settings
+from core.models import User
+from webhooks.user import send_new_user_notification
 
 log = logging.getLogger(__name__)
 
@@ -21,6 +23,8 @@ class UserManager(IntegerIDMixin, BaseUserManager[User, int]):
 
     async def on_after_register(self, user: User, request: Optional["Request"] = None):
         log.warning("User %r has registered.", user.id)
+
+        await send_new_user_notification(user)
 
     async def on_after_request_verify(self, user: User, token: str, request: Optional["Request"] = None):
         log.warning("Verification requestet for user %r. Verification token: %r", user.id, token)
